@@ -15,6 +15,10 @@ resource appPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: '${stackName}plan'
   location: stackLocation
   tags: tags
+  sku: {
+    name: 'F1'
+    tier: 'Free'
+  }
 }
 
 resource app 'Microsoft.Web/sites@2021-03-01' = {
