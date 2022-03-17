@@ -1,7 +1,7 @@
 // Parameters are input into your ARM Template.
 param stackPrefix string
 param stackEnvironment string
-param stackLocation string
+param stackLocation string = 'centralus'
 
 // Variables can be delcared to be leveraged throughout your ARM Template.
 var stackName = '${stackPrefix}${stackEnvironment}'
