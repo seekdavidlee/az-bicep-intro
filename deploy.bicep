@@ -5,6 +5,7 @@ param stackPrefix string
 param stackEnvironment string
 param stackLocation string = 'centralus'
 param clientId string
+param domain string
 
 // Variables can be delcared to be leveraged throughout your ARM Template.
 var stackName = '${stackPrefix}${stackEnvironment}'
@@ -51,7 +52,7 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'AzureAd:Domain'
-          value: 'dleems.onmicrosoft.com'
+          value: '${domain}.onmicrosoft.com'
         }
         {
           name: 'AzureAd:TenantId'
