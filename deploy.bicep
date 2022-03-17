@@ -31,6 +31,13 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
     serverFarmId: appPlan.id
     siteConfig: {
       netFrameworkVersion: 'v6.0'
+      #disable-next-line BCP037
+      metadata: [
+        {
+          name: 'CURRENT_STACK'
+          value: 'dotnet'
+        }
+      ]
       appSettings: [
         {
           name: 'AzureAd:Instance'
