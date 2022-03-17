@@ -1,16 +1,22 @@
-// Parameters are input into your ARM Template.
+// Double forward slash for comments
+
+// Parameters are input into your ARM Template. ARM stands for Azure Resource Manager.
 param stackPrefix string
 param stackEnvironment string
 param stackLocation string = 'centralus'
+param clientId string
 
 // Variables can be delcared to be leveraged throughout your ARM Template.
 var stackName = '${stackPrefix}${stackEnvironment}'
 
+// Variables can be objects
 var tags = {
   'stack-name': 'contoso-web-app'
   'stack-environment': stackEnvironment
 }
 
+// Symobolic name = appPlan which can be referenced later. Notice also we include the version of the API because
+// everything in the backend is an API for ARM
 resource appPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: '${stackName}plan'
   location: stackLocation
@@ -28,9 +34,9 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
   tags: tags
   properties: {
     httpsOnly: true
-    serverFarmId: appPlan.id
+    serverFarmId: appPlan.id // Notice the reference here back to appPlan created earlier.
     siteConfig: {
-      netFrameworkVersion: 'v6.0'
+      netFrameworkVersion: 'v6.0' // Not sure why we need to include the metadata in order for the App Service to configure .NET stack setting correctly but hey, that's what makes it work.
       #disable-next-line BCP037
       metadata: [
         {
@@ -38,10 +44,10 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
           value: 'dotnet'
         }
       ]
-      appSettings: [
+      appSettings: [  // Configuration as code.
         {
           name: 'AzureAd:Instance'
-          value: environment().authentication.loginEndpoint
+          value: environment().authentication.loginEndpoint // Use functions provided in bicep to reference static values.
         }
         {
           name: 'AzureAd:Domain'
@@ -49,11 +55,11 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'AzureAd:TenantId'
-          value: subscription().tenantId
+          value: subscription().tenantId  // Yet another function so we don't have to figure this out and pass it in.
         }
         {
           name: 'AzureAd:ClientId'
-          value: '3d55a300-65cc-4de5-b732-14cd9bf226ad'
+          value: clientId
         }
         {
           name: 'AzureAd:CallbackPath'
