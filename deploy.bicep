@@ -45,7 +45,8 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
           value: 'dotnet'
         }
       ]
-      appSettings: [  // Configuration as code.
+      appSettings: [
+        // Configuration as code.
         {
           name: 'AzureAd:Instance'
           value: environment().authentication.loginEndpoint // Use functions provided in bicep to reference static values.
@@ -56,7 +57,7 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'AzureAd:TenantId'
-          value: subscription().tenantId  // Yet another function so we don't have to figure this out and pass it in.
+          value: subscription().tenantId // Yet another function so we don't have to figure this out and pass it in.
         }
         {
           name: 'AzureAd:ClientId'
@@ -70,3 +71,6 @@ resource app 'Microsoft.Web/sites@2021-03-01' = {
     }
   }
 }
+
+// This is an output of a App Service so we can re-use it if needed later in our script or CI/CD.
+output appServiceName string = app.name
