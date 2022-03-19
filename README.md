@@ -1,5 +1,5 @@
 # Introduction
-This is part of a demo series on DevOps. In this project, we are focused on designing a App Service Plan and App Service resources with bicep. We will learn about the concepts of parameters, variables, resource definations and outputs.
+In this project, we are focused on designing an App Service Plan with an App Service resource using bicep. We will learn about the concepts of parameters, variables, resource definations and outputs. Once we have deploy the infrastructure, we will be able to deploy an application to the App Service using methods such as Publish Profile from Visual Studio.
 
 # Steps
 We have created a bicep file and we are ready to deploy. Let's launch CloudShell and clone this repo there.
